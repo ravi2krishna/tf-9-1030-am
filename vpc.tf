@@ -83,3 +83,17 @@ resource "aws_route_table" "tf-ecomm-pvt-rt" {
     Name = "ecomm-private-route-table"
   }
 }
+
+# Create Public Associations 
+resource "aws_route_table_association" "tf-ecomm-pub-asc-A" {
+  subnet_id      = aws_subnet.tf-ecomm-pub-sn-A.id
+  route_table_id = aws_route_table.tf-ecomm-pub-rt.id
+}
+
+resource "aws_route_table_association" "tf-ecomm-pub-asc-B" {
+  subnet_id      = aws_subnet.tf-ecomm-pub-sn-B.id
+  route_table_id = aws_route_table.tf-ecomm-pub-rt.id
+}
+
+
+
