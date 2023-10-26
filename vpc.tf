@@ -106,3 +106,30 @@ resource "aws_route_table_association" "tf-ecomm-pvt-asc-B" {
   route_table_id = aws_route_table.tf-ecomm-pvt-rt.id
 }
 
+# Create Public NACL
+resource "aws_network_acl" "tf-ecomm-pub-nacl" {
+  vpc_id = aws_vpc.tf-ecomm.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "ecomm-public-nacl"
+  }
+}
+
