@@ -133,3 +133,29 @@ resource "aws_network_acl" "tf-ecomm-pub-nacl" {
   }
 }
 
+# Create Private NACL
+resource "aws_network_acl" "tf-ecomm-pvt-nacl" {
+  vpc_id = aws_vpc.tf-ecomm.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "ecomm-private-nacl"
+  }
+}
