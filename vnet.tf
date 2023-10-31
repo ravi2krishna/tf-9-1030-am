@@ -107,3 +107,14 @@ resource "azurerm_subnet_network_security_group_association" "tf-ecomm-db-sn-nsg
   network_security_group_id = azurerm_network_security_group.tf-ecomm-db-nsg.id
 }
 
+# Public IP
+resource "azurerm_public_ip" "tf-ecomm-web-pip" {
+  name                = "webpublicip"
+  resource_group_name = azurerm_resource_group.tf-ecomm.name
+  location            = azurerm_resource_group.tf-ecomm.location
+  allocation_method   = "Static"
+
+  tags = {
+    environment = "Production"
+  }
+}
