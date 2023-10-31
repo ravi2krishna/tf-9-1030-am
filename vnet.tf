@@ -94,3 +94,11 @@ resource "azurerm_network_security_group" "tf-ecomm-db-nsg" {
   }
 
 }
+
+# Web Subnet - Web NSG
+resource "azurerm_subnet_network_security_group_association" "tf-ecomm-web-sn-nsg" {
+  subnet_id                 = azurerm_subnet.tf-ecomm-web-sn.id
+  network_security_group_id = azurerm_network_security_group.tf-ecomm-web-nsg.id
+}
+
+
