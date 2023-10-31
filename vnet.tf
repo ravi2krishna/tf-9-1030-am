@@ -118,3 +118,17 @@ resource "azurerm_public_ip" "tf-ecomm-web-pip" {
     environment = "Production"
   }
 }
+
+# Web Network Interface
+resource "azurerm_network_interface" "tf-ecomm-web-nic" {
+  name                = "web-nic"
+  location            = azurerm_resource_group.tf-ecomm.location
+  resource_group_name = azurerm_resource_group.tf-ecomm.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.tf-ecomm-web-sn.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.tf-ecomm-web-pip.id
+  }
+}
