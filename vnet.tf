@@ -62,3 +62,35 @@ resource "azurerm_network_security_group" "tf-ecomm-web-nsg" {
   }
 
 }
+
+# Database Network Secuirty Group
+resource "azurerm_network_security_group" "tf-ecomm-db-nsg" {
+  name                = "dbsecuirtyrule"
+  location            = azurerm_resource_group.tf-ecomm.location
+  resource_group_name = azurerm_resource_group.tf-ecomm.name
+
+  security_rule {
+    name                       = "ssh"
+    priority                   = 1000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "postgre"
+    priority                   = 1010
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "5432"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+}
