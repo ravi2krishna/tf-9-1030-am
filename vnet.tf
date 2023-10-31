@@ -30,3 +30,35 @@ resource "azurerm_subnet" "tf-ecomm-db-sn" {
   virtual_network_name = azurerm_virtual_network.tf-ecomm-vnet.name
   address_prefixes     = ["10.0.1.0/24"]
 }
+
+# Web Network Secuirty Group
+resource "azurerm_network_security_group" "tf-ecomm-web-nsg" {
+  name                = "websecuirtyrule"
+  location            = azurerm_resource_group.tf-ecomm.location
+  resource_group_name = azurerm_resource_group.tf-ecomm.name
+
+  security_rule {
+    name                       = "ssh"
+    priority                   = 1000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "http"
+    priority                   = 1010
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+}
